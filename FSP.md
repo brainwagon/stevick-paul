@@ -8,10 +8,9 @@ unfolded instrument and its exact raytrace see [`TRACE.md`](TRACE.md).
 
 The FSP is the **same 3-mirror Paul core** — a paraboloidal primary plus two *mating
 spheres* (a convex secondary and a concave tertiary) — with a **single flat mirror** in
-the converging beam that both **folds** the light path and extracts the focus. It has
-four mirrors, exactly like the standard SP, but the flat is used as a folding mirror
-rather than a small diagonal, so the tube is much shorter and the focus comes out to
-the side of a compact box.
+the converging beam that turns the final leg back toward the primary side and extracts
+the focus there. It has four mirrors, exactly like the standard SP; the flat places the
+folded focus beside the primary in Novack's compact-box arrangement.
 
 Two things distinguish it from the standard SP:
 
@@ -19,7 +18,7 @@ Two things distinguish it from the standard SP:
 |---|---|---|
 | Radius ratio `A` | 0.40 (optimum) | 0.45 (Novack) |
 | Focal-plane tilt | ~4·T3 | **slightly smaller** (higher A) |
-| Output | flat diagonal, image thrown out ~90° to the sec–tert beam | flat **folds** the path, compact box |
+| Output | diagonal extracts focus across the sec–tert beam | last leg folds back; focus beside primary |
 | Look | long tube / Schiefspiegler-like | compact box |
 
 The higher radius ratio `A = 0.45` lengthens the instrument a little and enlarges the
@@ -40,29 +39,37 @@ Files:
 
 ## 3. Prescription — 8" f/12, A = 0.45
 
-Exact raytrace (diffraction-limited, RMS 0.23 µm on-axis). Coordinates: `z` = optical
-axis (light enters in −z), `y` = meridional/"walk" direction; all axes in the y–z plane.
+This is an 8" f/12 reconstruction based on the standard Stevick-Paul equations and
+Novack's published 6" f/10 layout, not Novack's original prescription. The layout
+includes the reflected path after the folding flat; the folded focus is not the
+conventional, unreflected tertiary focus. Coordinates: `z` = optical axis (light enters
+in −z), `y` = meridional/"walk" direction; all axes in the y–z plane.
 
 | Surface | Diameter | Vertex (y, z) | Radius | Conic | Axis tilt | Spacing |
 |---------|----------|---------------|--------|-------|-----------|---------|
 | Primary — paraboloid | 8.0" | (0.000, 0.000) | +192.00" | −1 | +2.973° | e1 = 52.8" |
 | Secondary — convex sphere | 4.25" (min 3.94") | (5.469, 52.516) | +86.40"* | 0 | +1.156° | e2 = 86.4" |
-| Tertiary — concave sphere | 5.0" (min 5.18") | (10.944, −33.710) | +86.40"* | 0 | −5.442° | e3 = 43.2" |
-| Folding flat | ≥ ~2" minor | in converging beam | ∞ | — | ≈ 39° to axis | — |
-| Focal plane | design field 1" | (5.49, 9.14) | — | — | tilt 7.25° | — |
+| Tertiary — concave sphere | 5.25" (min 5.18") | (10.944, −33.710) | +86.40"* | 0 | −5.442° | e3 = 43.2" optical path |
+| Folding flat | 2.0" minor | (5.947, 1.562) center | ∞ | — | 46.40° to axis | chief ray hits plane 35.0" from tertiary |
+| Folded focal plane | design field 1" | (−1.649, 1.647) | — | — | 7.25° to chief ray | 8.2" after flat |
 
 \* axis points toward the centre of curvature; the secondary is convex, the tertiary
 concave as seen from the incoming beam.
 
 Derived: F1 = 96", F2 = −43.2", F3 = 43.2"; `T1 = 2.973°`, `T2 = 4.789°`, `T3 = 1.817°`;
 principal-ray angles **2·T1 = 5.945°**, **2·T3 = 3.633°**, and **−7.25°** out of the
-tertiary (this last equals the focal-plane tilt `≈ 4·T3 = 7.27°`); offsets a1 = 5.47",
-a2 = 10.94"; central beam `A·D = 3.6"`.
+tertiary (nominal image-plane tilt `≈ 4·T3 = 7.27°`); offsets a1 = 5.47",
+a2 = 10.94"; central beam `A·D = 3.6"`. The flat reflects the tertiary's converging
+cone and its image plane: the chief ray runs 35.0" from the tertiary to the flat, then
+8.2" from the flat to the folded focus, preserving e3 = 43.2" total optical path. The
+reflected focus lands beside the primary rather than at the conventional internal focus.
+The model's on-axis geometric spot RMS is 1.80 µm at the nominal image plane (Airy
+radius 8.05 µm at 550 nm); the plane flat preserves that spot under reflection.
 
 ## 4. Reference: Novack's 6" f/10, A = 0.45
 
-Bob Novack built the first FSP at 6" f/10. My raytracer reproduces his published
-numbers (secondary 27.2" FL, e1 = 33", e3 = 27"):
+Bob Novack built the first FSP at 6" f/10. His drawing gives the correcting spheres a
+27.2" focal length; applying the design equations gives e1 = 33" and e3 = 27":
 
 | Surface | Diameter | Radius | Conic | Axis tilt | Spacing |
 |---------|----------|--------|-------|-----------|---------|
@@ -100,16 +107,22 @@ numbers (secondary 27.2" FL, e1 = 33", e3 = 27"):
 
 The flat sits in the converging tertiary→focus cone and must **not** cross the
 collimated secondary→tertiary beam, which runs within a fraction of an inch of it. For
-the 8" f/12 FSP the raytrace-correct placement is:
+the reconstructed 8" f/12 FSP model, the placement is:
 
-* centre on the chief ray at **34.5" from the tertiary** (z ≈ 10.5"),
-* flat surface at **≈ 39° to the optical axis**,
-* minimum meridional half-length **0.56"** — use the next larger standard flat
-  (~2" minor axis) for margin, keeping its **upper edge against the collimated beam**.
+* the chief ray intersects the flat at **35.0" from the tertiary** (y ≈ 6.53", z ≈ 1.01");
+* flat surface at **≈ 46.4° to the optical axis**,
+* required upper-edge clearance is **0.60"** from the chief-ray hit; a 2"-minor flat
+  (about 2.8" along its surface) extends downward from that edge, keeping the **upper
+  edge tangent to the collimated beam**.
+* reflected principal ray exits at **−85.54° to +z**, reaching the folded focus at
+  (y, z) ≈ **(−1.65", 1.65")**, beside the primary. Its focal plane is the reflection of the original image
+  plane; the un-folded focus is only a construction reference, not the final image location.
 
-This was verified by raytrace: 100 % of the converging cone is captured and **0 rays** of
-the collimated, primary–secondary, or incoming beams are blocked. Always re-derive it
-from your own full-scale drawing and check the collimated-beam clearance.
+The generator verifies 100% capture and zero obstruction for 1,793 sampled on-axis pupil
+rays with the 2"-minor flat, including the incoming, primary–secondary, and
+secondary–tertiary segments, plus clearance from all three powered mirrors after the fold.
+This is a sampled geometric check, not a substitute for re-deriving the flat position and
+clearance for the as-built full-scale layout.
 
 ## 7. Notes and trade-offs
 
