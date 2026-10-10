@@ -41,6 +41,7 @@ Airy disk diameter versus wavelength and f-number:
 
 | File | Description |
 |------|-------------|
+| [`why-why-not.md`](why-why-not.md) | Short list: reasons to build — or not build — a Stevick-Paul |
 | [`DESIGN.md`](DESIGN.md) | Collected facts, equations, history, and tradeoffs |
 | [`BUILD_NOTES.md`](BUILD_NOTES.md) | Buildability assessment, f/12 vs f/15, risk register, why f/10+ only |
 | [`TRACE.md`](TRACE.md) | Exact prescription, method, results, and caveats |
