@@ -174,6 +174,11 @@ f-ratios may support up to the design field while retaining enough free cone.
 - An alternative is to send light out the *side panel* (focuser near the altitude axis,
   nearly stationary eyepiece); the diagonal then sits on its side against the parallel
   beam.
+- **Exact raytraced placement (8" f/12):** the flat's upper edge rides tangent to the
+  collimated secondary→tertiary beam and it captures the whole converging cone — centre
+  at **26.5" from the tertiary**, surface **38.3° from the axis**, half-length **0.70"**
+  (raytrace-verified: 100% cone capture, 0 rays blocked in any through-beam). This
+  supersedes the approximate `T4 = 45−T3 = 42.77°` for construction; see `TRACE.md` §5.
 - **Light baffle:** surrounds the converging cone from the primary, fitting into the
   notches where light paths cross. Sized to just pass the central beam intact, so
   vignetting technically begins immediately off-center but blocks <10% of light at the
@@ -264,3 +269,6 @@ Key verified results:
   1° field, versus the 8.05 µm Airy radius (λ=550 nm, f/12).
 - Physical mirror-axis tilts: primary +2.97°, secondary +0.74°, tertiary −6.73°
   (near-retro fold — these differ from Stevick's T1/T2/T3, which are kink half-angles).
+- Diagonal clearance checked by raytrace: the flat threads between the collimated
+  secondary→tertiary beam and the converging cone without blocking either (see `TRACE.md`
+  §5). A naive cartesian placement obstructed ~10% of the collimated beam.

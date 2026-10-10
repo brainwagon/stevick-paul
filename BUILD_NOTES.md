@@ -249,6 +249,7 @@ this aperture.
 | Primary misses target r.o.c. | Recompute all tilts/spacings from actual value (normal, expected) |
 | Focal-plane tilt too harsh at chosen f/# | Move to a longer f/# (f/12 → f/15) or add an image-tilting lens |
 | Alignment never converges | Build rigid, draw-first, tip/tilt everywhere; consider the folded layout for compactness |
+| Diagonal shadows the collimated beam | The flat must ride tangent between the collimated and converging beams (only a fraction of an inch of clearance) — derive its position from the full-scale drawing and check clearance. See `TRACE.md` §5 |
 | Cost/time overrun | Buy the primary; reduce aperture; build a Newtonian first |
 
 ## 8. References

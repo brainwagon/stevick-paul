@@ -25,6 +25,9 @@ focal-plane tilt. The resulting system is:
 * Principal-ray angles: **2·T1 = 5.945°**, **2·T3 = 4.459°**, **9.000°**
 * Verified **diffraction limited**: geometric spot RMS **0.77 µm** on-axis, ~1.06 µm at
   1° field, versus the **8.05 µm** Airy radius (λ = 550 nm, f/12)
+* Diagonal placement checked by raytrace: the flat threads tangent between the collimated
+  beam and the converging cone with **no aperture obstruction** (a naive placement blocked
+  ~10% of the collimated beam — see [`TRACE.md`](TRACE.md) §5)
 
 Spot diagrams (tiled with the Airy disk):
 
