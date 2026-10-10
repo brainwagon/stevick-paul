@@ -200,3 +200,57 @@ if __name__ == "__main__":
     uv, din = field_rays(0.0)
     (rms, zf, c), _ = best_focus(surfs, uv, din)
     print(f"on-axis RMS = {rms*25400:.4f} um at z={zf:.3f}")
+
+
+def _turn(d, deg):
+    """Rotate a meridional direction by deg, counter-clockwise as drawn with
+    +z to the left and +y up (Novack's drawing orientation)."""
+    c, s = np.cos(np.radians(deg)), np.sin(np.radians(deg))
+    y, z = d[1], d[2]
+    return np.array([0.0, s * (-z) + c * y, -(c * (-z) - s * y)])
+
+
+def build_fsp(N=10.0, D=6.0, A=0.45, C=43.85, flat_frac=31.7 / 54.4,
+              fold_deg=29.36, dev3_deg=None):
+    """Folded Stevick-Paul in Novack's arrangement:
+    primary -> secondary -> FOLDING FLAT -> tertiary -> focus.
+
+    The flat sits in the collimated secondary->tertiary beam, flat_frac of the
+    way from secondary to tertiary, and deviates the chief ray by fold_deg
+    (the angle between its incoming and outgoing legs, as on Novack's drawing).
+    Stevick's equations fix the powered-mirror tilts; C defaults to the value
+    implied by Novack's 6" f/10 (T1 = 4.385 deg; his drawing's 8.77 deg).
+    The tertiary deviation (angle between its two legs) defaults to 2*T3.
+
+    Returns ([P, S, flat, T], info).
+    """
+    F1 = N * D
+    R1 = 2 * F1
+    R2 = A * R1
+    T1 = C / N
+    T2 = (1 + A) / (2 * A) * T1
+    T3 = T2 - T1
+    dev3 = 2 * T3 if dev3_deg is None else dev3_deg
+    e1, e2, e3 = F1 - R2 / 2, R2, R2 / 2
+
+    din = np.array([0.0, 0.0, -1.0])
+    d1 = _turn(-din, -2 * T1)          # primary -> secondary
+    d2 = _turn(-d1, 2 * T2)            # secondary -> flat
+    d3 = _turn(-d2, fold_deg)          # flat -> tertiary
+    d4 = _turn(-d3, -dev3)             # tertiary -> focus
+    V1 = np.zeros(3)
+    V2 = V1 + e1 * d1
+    VF = V2 + flat_frac * e2 * d2
+    V3 = VF + (1 - flat_frac) * e2 * d3
+    Fp = V3 + e3 * d4
+
+    s1 = Sur(V1, unit(d1 - din), R1, k=-1, name="Primary (paraboloid)")
+    s2 = Sur(V2, unit(d1 - d2), R2, name="Secondary (convex sphere)")
+    sf = Sur(VF, unit(d3 - d2), 0.0, flat=True, name="Folding flat")
+    s3 = Sur(V3, unit(d4 - d3), R2, name="Tertiary (concave sphere)")
+    info = dict(N=N, D=D, A=A, C=C, F1=F1, R1=R1, R2=R2, T1=T1, T2=T2, T3=T3,
+                dev3=dev3, fold=fold_deg, e1=e1, e2=e2, e3=e3,
+                eSF=flat_frac * e2, eFT=(1 - flat_frac) * e2,
+                V1=V1, V2=V2, VF=VF, V3=V3, Fp=Fp,
+                din=din, d1=d1, d2=d2, d3=d3, d4=d4)
+    return [s1, s2, sf, s3], info

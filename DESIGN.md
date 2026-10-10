@@ -224,7 +224,9 @@ Astrofest 1993.
 - Radius ratio **A = 0.45** (slightly higher than 0.4 → slightly less focal-plane tilt).
 - Uses the flat to **fold** the light path, making the design more compact and
   **eliminating the separate diagonal mirror** (still 4 mirrors: primary, secondary,
-  tertiary, folding flat).
+  tertiary, folding flat). The flat sits in the **collimated beam between secondary and
+  tertiary** (primary → secondary → flat → tertiary → focus), and the primary tilt is
+  larger than the A = 0.4 table gives (2·T1 = 8.77° at f/10). See [`FSP.md`](FSP.md).
 - Functions essentially the same as the standard SPT. An **f/15** version can use a
   spherical primary.
 - Aberration balance: on/off-axis astigmatism and coma cancelled by mirror locations and
