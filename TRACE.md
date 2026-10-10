@@ -124,3 +124,40 @@ the spots (tiny) inside the red Airy circle; `sp_airy.png` shows the Airy diamet
   ~½-magnitude edge vignetting and the light baffle are design/mechanical issues covered
   in `DESIGN.md` and `BUILD_NOTES.md`.
 * **Units:** inches unless stated; wavelength in nm/µm for the diffraction terms.
+
+---
+
+## 5. Diagonal placement & obstruction check
+
+The flat diagonal sits inside the converging tertiary→focus cone and must thread between
+that cone and the **collimated secondary→tertiary beam**, which run within a fraction of
+an inch of each other.
+
+**Original cartesian placement was wrong.** Placing the diagonal at `0.72·e3` along the
+chief ray with a ±1.4″ extent put its upper end at y = 8.64", while the lower edge of the
+collimated beam is at y ≈ 8.13" there.  Raytrace: **63 of 613 aperture rays (~10 %) of
+the collimated secondary→tertiary beam were blocked** — a real aperture obstruction.
+
+**Corrected placement** (now used in `sp_layout.png` / `.svg` / `.dxf`), chosen so the
+diagonal's upper edge rides *tangent* to the collimated beam and it still catches the
+whole cone:
+
+* centre on the chief ray at **26.5" from the tertiary** (z ≈ 6.9"),
+* surface **38.3° from the axis**, half-length **0.70"**,
+* verified: **100 % of the converging cone captured, 0 rays blocked** in the incoming,
+  primary→secondary, or secondary→tertiary beams.
+
+**Why this is delicate.** Because the collimated beam and the converging cone leave the
+tertiary nearly together (they are tangent around z ≈ 9" and overlap by up to ~0.9" closer
+to the tertiary), the diagonal has only a narrow window in which to sit.  This is exactly
+the situation Stevick describes — *"nestle the diagonal up against the central beam …
+slid along the central beam toward the tertiary … until it catches only enough of the rays
+forming the top edge of the field to produce a one-half magnitude loss"* — and is the
+reason he insists on the full-scale layout before cutting metal.  The margin is small;
+any builder should re-derive the diagonal position from their own full-scale drawing and
+check the collimated-beam clearance.
+
+**Caveat:** this reconstruction's on-axis image is diffraction-limited, but the
+collimated and converging beams pass within a fraction of an inch and are not separated
+by a wide margin as in a fully-detailed mechanical model.  Treat the diagonal position as
+indicative and verify against the finished layout.

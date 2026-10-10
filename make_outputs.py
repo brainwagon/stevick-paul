@@ -72,14 +72,22 @@ def make_layout():
     ax.text(Fp[2] - 1.0, Fp[1] + 2.0, "focal plane\n(tilt %.2f°)" % abs(info["th3"]),
             fontsize=9.5, ha="right")
 
-    # diagonal
-    tdiag = 0.72 * info["e3"]
+    # diagonal: placed so its UPPER edge rides tangent to the collimated
+    # secondary->tertiary beam and it still captures the whole converging cone.
+    # Placement verified by raytrace: 100% cone capture, 0 through-beam rays blocked.
+    tdiag = 26.50
     Pd = V3 + tdiag * d3
-    diagdir = np.array([0.0, np.cos(np.radians(42.77)), np.sin(np.radians(42.77))])
-    dpts = np.array([Pd - 1.4 * diagdir, Pd + 1.4 * diagdir])
+    diagdir = np.array([0.0, np.sin(np.radians(38.27)), np.cos(np.radians(38.27))])
+    Ld = 0.70
+    dpts = np.array([Pd - Ld * diagdir, Pd + Ld * diagdir])
     ax.plot(dpts[:, 2], dpts[:, 1], color="#7030a0", lw=2.8)
-    ax.text(Pd[2] - 1.0, Pd[1] - 3.6, "flat diagonal\nT4=42.77°", color="#7030a0",
-            fontsize=9, ha="right")
+    # show the folded chief ray leaving the diagonal
+    nd = np.array([0.0, np.cos(np.radians(38.27)), -np.sin(np.radians(38.27))])
+    rdir = M.reflect(d3, nd)
+    ax.annotate("", xy=(Pd + 9 * rdir)[[2, 1]], xytext=Pd[[2, 1]],
+                arrowprops=dict(arrowstyle="-|>", color="#7030a0", lw=1.4))
+    ax.text(Pd[2] - 1.0, Pd[1] - 3.6, "flat diagonal (upper edge rides\nthe collimated beam; folds image out)",
+            color="#7030a0", fontsize=9, ha="right")
 
     # spacings
     def dim(p, q, txt, off=1.0):
