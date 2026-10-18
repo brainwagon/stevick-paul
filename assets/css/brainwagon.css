@@ -1,0 +1,411 @@
+/* The brainwagon.org stylesheet (static/style.css in brainwagon-okf),
+   trimmed to the rules this single page uses so it looks like the rest of
+   the site. Copy changes across from there rather than editing here alone. */
+
+:root {
+    --bg-color: #ffffff;
+    --text-color: #111827;
+    --link-color: #2563eb;
+    --link-hover-color: #1d4ed8;
+    --nav-bg: #f9fafb;
+    --nav-border: #000000;
+    --nav-link-color: #111827;
+    --nav-link-hover-color: #2563eb;
+    --footer-bg: #f9fafb;
+    --footer-border: #e5e7eb;
+    /* Dark enough to clear 4.5:1 against the tinted backgrounds the muted
+       text sits on (the code-tinted repo cards), not merely against white. */
+    --meta-color: #5b6470;
+    --rss-bg: #f59e0b;
+    --rss-hover-bg: #d97706;
+    /* The amber badge is the same in both themes, so its text is a fixed dark
+       rather than a theme colour that would invert to near-white on amber. */
+    --rss-text: #111827;
+    --code-bg: #f3f4f6;
+    --code-text: #111827;
+    --inline-code-bg: #e5e7eb;
+    --table-border: #e5e7eb;
+    --table-stripe: #f9fafb;
+    --table-header-bg: #f3f4f6;
+    --ai-bg: #eff6ff;
+    --ai-border: #bfdbfe;
+    --ai-title: #1e3a8a;
+    /* A quoted conversation: the author's turns sit in a warm card, the other
+       party's run full width beside a rule. */
+    --turn-author-bg: #fef3e2;
+    --turn-author-border: #f5d29a;
+    --turn-other-rule: #bfdbfe;
+    --turn-speaker: #5b6470;
+}
+
+/* General */
+body {
+    background-color: var(--bg-color);
+    margin-left: 1em ;
+    margin-right: 1em ;
+    line-height: 1.5em;
+    color: var(--text-color);
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+.container {
+	margin-left: auto ;
+	margin-right: auto ;
+	gap: 12px ;
+    width: 100% ;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* The theme toggle carries both glyphs as inline SVG; CSS shows the one that
+   matches the active theme, so the button still works with JavaScript off and
+   the script no longer rewrites icon-font classes. */
+.theme-icon-sun {
+    display: none;
+}
+
+.dark-theme .theme-icon-moon {
+    display: none;
+}
+
+.dark-theme .theme-icon-sun {
+    display: inline-block;
+}
+
+/* Fade between pages on navigation, where the browser supports it and the
+   reader has not asked for reduced motion. Unsupported browsers ignore it. */
+@media (prefers-reduced-motion: no-preference) {
+    @view-transition {
+        navigation: auto;
+    }
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 0;
+    line-height: 1.2em;
+    margin-top: 1em;
+    font-weight: 700;
+    letter-spacing: -0.05em;
+}
+
+a:link, a:visited {
+    color: var(--link-color);
+    text-decoration: none
+}
+
+a:hover, a:active {
+    color: var(--link-hover-color);
+    text-decoration: underline
+}
+
+/* Visible focus for keyboard users, on every focusable thing, in both themes.
+   The search field below used to suppress its own outline; that is exactly the
+   affordance a keyboard user needs, so it is kept. */
+:focus-visible {
+    outline: 3px solid var(--link-color);
+    outline-offset: 2px;
+}
+
+/* A link inside a paragraph is distinguished by more than colour (WCAG 1.4.1):
+   it is underlined. Block-level links - nav, headings, cards, the gallery, the
+   result cards - keep their styling, because they are not embedded in prose
+   where a reader could mistake them for emphasis. The footer's prose is
+   included: its mailto link sat below the threshold in dark mode, where the
+   link colour is closer to the body text. The `:link`/`:visited` pair is
+   needed to outweigh the base `a:link` rule above, which turns the underline
+   off for every link on the Site. */
+main p a:link, main p a:visited, main p a:hover, main p a:active,
+main li a:link, main li a:visited, main li a:hover, main li a:active,
+main dd a:link, main dd a:visited,
+main blockquote a:link, main blockquote a:visited,
+main .repo-desc a:link, main .repo-desc a:visited,
+footer p a:link, footer p a:visited {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 1px;
+}
+
+/* Available to a screen reader, invisible on screen. Used for the search
+   field's label, which the compact nav has no room to display. */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Off-screen until focused, then parked over the top of the page. The first
+   stop for anyone tabbing through, so they can pass the nav in one keystroke. */
+.skip-link {
+    position: absolute;
+    top: 0;
+    left: -9999px;
+    z-index: 1100;
+    padding: 0.75em 1em;
+    background: var(--bg-color);
+    color: var(--link-color);
+    border: 2px solid var(--link-color);
+    border-radius: 0 0 4px 0;
+}
+
+.skip-link:focus {
+    left: 0.5em;
+    top: 0.5em;
+}
+
+
+/* Single column layout */
+nav section, header section, footer section {
+    /* Contain the floated search/About/RSS group: when it wraps to a second
+       row it must not hang below the bar and shove the Post title aside. */
+    display: flow-root;
+    max-width: 768px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 0.5em;
+}
+
+main {
+    max-width: 768px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 0.5em;
+}
+
+aside {
+    padding: 20px ;
+    overflow: hidden;
+}
+
+
+/* Navigation panel */
+nav {
+    background: var(--nav-bg); border-bottom: 2px solid var(--nav-border);
+    color: var(--nav-link-hover-color) ;
+    line-height: 3em;
+}
+
+nav a {
+    margin-right: 1em;
+}
+
+nav a:link, nav a:visited {
+    color: var(--nav-link-color);
+}
+
+nav a:hover, nav a:active {
+    color: var(--nav-link-hover-color);
+    text-decoration: none;
+}
+
+@media screen and (min-width: 600px) {
+    nav .links {
+        /* float: right; */
+    }
+}
+
+/* This might be overkill, but maybe not */
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 1.5em;
+}
+
+table th, table td {
+    border: 1px solid var(--table-border);
+    padding: 8px;
+    vertical-align: top;
+}
+
+table tr:nth-child(even) {
+    background-color: var(--table-stripe);
+}
+
+table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: var(--table-header-bg);
+}
+
+.constrained-column {
+    max-width: 400px ;
+    overflow: hidden ;
+    text-overflow: ellipsis ;
+    white-space: nowrap ;
+}
+
+
+/* Footer */
+footer {
+    background: var(--footer-bg);
+    border-top: thin solid var(--footer-border);
+    margin-top: 2em;
+    padding: 1em 0;
+    box-shadow: 0 100vh 0 100vh var(--footer-bg);
+    text-align: center;
+}
+
+footer section p {
+}
+
+footer .footer-invite {
+    max-width: 40em;
+    margin: 0 auto 0.75em auto;
+    line-height: 1.5;
+}
+
+.footer-links {
+    margin: 0 0 0.5em 0;
+    font-size: 0.9em;
+}
+
+.bio {
+    line-height: 1.6;
+}
+
+footer a {
+    margin-right: 1em;
+}
+
+footer a:last-child {
+    margin-right: 0;
+}
+
+
+/* Posts */
+article {
+    margin-top: 1em;
+    margin-bottom: 3em;
+    border-left: 4px solid var(--footer-border);
+    padding-left: 1.5rem;
+    margin-left: -1.5rem;
+}
+
+article:hover {
+    border-left-color: var(--link-color);
+}
+
+article.single-post {
+    border-left: none;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+/* RSS */
+.rss {
+    padding: 0.3em 0.35em;
+    border-radius: 0.25em;
+    font-size: 0.75em;
+    font-weight: bold;
+    line-height: normal;
+    vertical-align: middle;
+}
+
+.rss:link, .rss:visited, .rss:hover, .rss:active {
+    color: var(--rss-text);
+    text-decoration: none;
+}
+
+.rss:link, .rss:visited {
+    background: var(--rss-bg);
+}
+
+.rss:hover, .rss:active {
+    background: var(--rss-hover-bg);
+}
+
+/* Preformatted text (code blocks) */
+pre {
+    background-color: var(--code-bg);
+    color: var(--code-text);
+    padding: 1em;
+    border-radius: 4px;
+    overflow-x: auto;
+    font-size: 0.9em;
+    line-height: 1.45;
+    margin: 1.5em 0;
+}
+
+pre code {
+    background-color: transparent;
+    padding: 0;
+    border-radius: 0;
+    color: inherit;
+}
+
+code {
+    font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    background-color: var(--inline-code-bg);
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #000000;
+        --text-color: #f3f4f6;
+        --link-color: #60a5fa;
+        --link-hover-color: #93c5fd;
+        --nav-bg: #000000;
+        --nav-border: #ffffff;
+        --nav-link-color: #d1d5db;
+        --nav-link-hover-color: #ffffff;
+        --footer-bg: #000000;
+        --footer-border: #374151;
+        --meta-color: #9ca3af;
+        --code-bg: #111827;
+        --code-text: #f3f4f6;
+        --inline-code-bg: #1f2937;
+        --table-border: #374151;
+        --table-stripe: #111827;
+        --table-header-bg: #1f2937;
+        --ai-bg: #172554;
+        --ai-border: #1e3a8a;
+        --ai-title: #bfdbfe;
+        --turn-author-bg: #2a1d0a;
+        --turn-author-border: #6b4a14;
+        --turn-other-rule: #1e3a8a;
+        --turn-speaker: #9ca3af;
+    }
+}
+
+html.dark-theme {
+    --bg-color: #000000;
+    --text-color: #f3f4f6;
+    --link-color: #60a5fa;
+    --link-hover-color: #93c5fd;
+    --nav-bg: #000000;
+    --nav-border: #ffffff;
+    --nav-link-color: #d1d5db;
+    --nav-link-hover-color: #ffffff;
+    --footer-bg: #000000;
+    --footer-border: #374151;
+    --meta-color: #9ca3af;
+    --code-bg: #111827;
+    --code-text: #f3f4f6;
+    --inline-code-bg: #1f2937;
+    --table-border: #374151;
+    --table-stripe: #111827;
+    --table-header-bg: #1f2937;
+    --ai-bg: #172554;
+    --ai-border: #1e3a8a;
+    --ai-title: #bfdbfe;
+    --turn-author-bg: #2a1d0a;
+    --turn-author-border: #6b4a14;
+    --turn-other-rule: #1e3a8a;
+    --turn-speaker: #9ca3af;
+}

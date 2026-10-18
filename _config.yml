@@ -1,3 +1,4 @@
-theme: jekyll-theme-cayman
 title: Stevick-Paul Telescope
 description: Design notes and an exact 8" f/12 raytrace of the Stevick-Paul telescope
+plugins:
+  - jekyll-seo-tag

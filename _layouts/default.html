@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% seo %}
+    <link rel="stylesheet" href="{{ '/assets/css/brainwagon.css?v=' | append: site.github.build_revision | relative_url }}">
+    <link rel="me" href="https://mastodon.social/@brainwagon">
+    <link rel="icon" href="https://brainwagon.org/images/caricature-small.png" type="image/png">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+    <script>
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark-theme');
+      }
+    </script>
+</head>
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <nav aria-label="Main">
+        <section>
+            <a href="https://brainwagon.org/">Home</a>
+            <a href="https://brainwagon.org/blog/index.html">Blog</a>
+            <a href="https://brainwagon.org/telescopes/">Telescopes</a>
+            <a href="https://brainwagon.org/github/">Github</a>
+            <a href="https://brainwagon.org/podcasts/">Radio</a>
+            <a href="https://brainwagon.org/contact/">Contact</a>
+
+            <div style="float: right; display: flex; align-items: center;">
+                <a href="https://brainwagon.org/about/">About</a>
+                <a href="https://brainwagon.org/blog/rss.xml" class="rss">RSS</a>
+                <button id="theme-toggle" type="button" title="Toggle dark mode" aria-label="Toggle dark mode" aria-pressed="false" style="background: none; border: none; cursor: pointer; color: var(--nav-link-color); font-size: 1.2em; vertical-align: middle;">
+                    <svg class="theme-icon theme-icon-moon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" style="width: 1em; height: 1em; vertical-align: middle; fill: currentColor;"><path d="M20.742 13.045a8.088 8.088 0 0 1-2.077.271c-2.135 0-4.14-.83-5.646-2.336a8.025 8.025 0 0 1-2.064-7.723A1 1 0 0 0 9.73 2.034a10.014 10.014 0 0 0-4.489 2.582c-3.898 3.898-3.898 10.243 0 14.143a9.937 9.937 0 0 0 7.072 2.93 9.93 9.93 0 0 0 7.07-2.929 10.007 10.007 0 0 0 2.583-4.491 1.001 1.001 0 0 0-1.224-1.224zm-2.772 4.301a7.947 7.947 0 0 1-5.656 2.343 7.953 7.953 0 0 1-5.658-2.344c-3.118-3.119-3.118-8.195 0-11.314a7.923 7.923 0 0 1 2.06-1.483 10.027 10.027 0 0 0 2.89 7.848 9.972 9.972 0 0 0 7.848 2.891 8.036 8.036 0 0 1-1.484 2.059z"/></svg>
+                    <svg class="theme-icon theme-icon-sun" aria-hidden="true" focusable="false" viewBox="0 0 24 24" style="width: 1em; height: 1em; vertical-align: middle; fill: currentColor;"><path d="M6.993 12c0 2.761 2.246 5.007 5.007 5.007s5.007-2.246 5.007-5.007S14.761 6.993 12 6.993 6.993 9.239 6.993 12zM12 8.993c1.658 0 3.007 1.349 3.007 3.007S13.658 15.007 12 15.007 8.993 13.658 8.993 12 10.342 8.993 12 8.993zM10.998 19h2v3h-2zm0-17h2v3h-2zm-9 9h3v2h-3zm17 0h3v2h-3zM4.219 18.363l2.12-2.122 1.415 1.414-2.12 2.122zM16.24 6.344l2.122-2.122 1.414 1.414-2.122 2.122zM6.342 7.759 4.22 5.637l1.415-1.414 2.12 2.122zm13.434 10.605-1.414 1.414-2.122-2.122 1.414-1.414z"/></svg>
+                </button>
+            </div>
+        </section>
+    </nav>
+    <main id="main">
+        <section>
+<article>
+{{ content }}
+</article>
+        </section>
+    </main>
+    <footer>
+        <section>
+            <p class="footer-invite">Questions, corrections, or a project you
+            would like a second pair of hands on? Write to me at
+            <a href="mailto:mvandewettering@gmail.com">mvandewettering@gmail.com</a>.
+            I read my email and I answer it.</p>
+            <p class="footer-links">
+                <a href="https://brainwagon.org/about/">About</a>
+                <a href="https://brainwagon.org/contact/">Contact</a>
+                <a href="https://brainwagon.org/accessibility/">Accessibility</a>
+                <a href="https://brainwagon.org/blog/rss.xml" class="rss">RSS</a>
+            </p>
+            <p>&copy; 2002-{{ site.time | date: '%Y' }}, Mark VandeWettering</p>
+        </section>
+    </footer>
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        const body = document.body;
+
+        const setThemeState = (isDark) => {
+            themeToggle.setAttribute('aria-pressed', String(isDark));
+        };
+
+        const isDark = html.classList.contains('dark-theme');
+        if (isDark) {
+            body.classList.add('dark-theme');
+        }
+        setThemeState(isDark);
+
+        themeToggle.addEventListener('click', () => {
+            const nowDark = body.classList.toggle('dark-theme');
+            html.classList.toggle('dark-theme', nowDark);
+            localStorage.setItem('theme', nowDark ? 'dark' : 'light');
+            setThemeState(nowDark);
+        });
+    </script>
+</body>
+</html>
